@@ -8,9 +8,9 @@ class Games
     while player_1 == rival_1 do
       puts "じゃんけん..."
       puts "0(グー) 1(チョキ) 2(パー) 3(戦わない)"
-      player_1 = gets.chomp.to_i
+      player_1 = gets.to_i
       rival_1 = rand(3)
-      return if player_1 == 3 #メソッドから抜ける
+      return unless player_1.between?(0, 2) #入力値が0~2以外であればメソッドから抜ける
       puts "ポイ!"
       puts "---------------------------------"
       puts "あなた: #{hands[player_1]}を出しました"
@@ -32,7 +32,7 @@ class Games
     return if @judgement == 0 #じゃんけんの勝敗がついていない場合はメソッドを抜ける
     puts "あっち向いて〜"
     puts "0(上) 1(下) 2(左) 3(右)"
-    player_2 = gets.chomp.to_i
+    player_2 = gets.to_i
     rival_2 = rand(4)
     puts "ホイ!"
     puts "---------------------------------"
@@ -41,12 +41,12 @@ class Games
     puts "---------------------------------"
     if @judgement == 2 && player_2 == rival_2
       @total_judgement = 2
-      puts "あなたの勝ち!"
+      puts "=> あなたの勝ち!"
     elsif @judgement == 1 && player_2 == rival_2
       @total_judgement = 1
-      puts "あなたの負け"
+      puts "=> あなたの負け"
     else
-      puts "引き分け..."
+      puts "=> 引き分け"
     end
   end
 
@@ -54,6 +54,7 @@ class Games
   def repeat(n) #n回戦する
     result = [0, 0]
     while result.sum < n do
+      puts "<< #{result.sum + 1}回戦目 >>"
       janken
       atchimuitehoi
       break if @judgement == 0 #じゃんけんで勝敗がついていない場合はループを抜ける
@@ -74,7 +75,7 @@ end
 
 
 
-puts "じゃんけんを開始します　何回戦いますか？　数字を入力してください"
-n = gets.chomp.to_i
+puts "何回戦いますか？　数字を入力してください"
+n = gets.to_i
 game = Games.new
 game.repeat(n)
